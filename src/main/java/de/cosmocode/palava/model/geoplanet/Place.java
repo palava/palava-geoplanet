@@ -32,6 +32,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.google.common.base.Predicate;
@@ -80,6 +83,30 @@ public final class Place extends AbstractToponym implements ToponymBase {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "place")
     private Set<Alias> aliases = Sets.newHashSet();
+
+    /**
+     * Pre-persist callback which prevents inserts.
+     */
+    @PrePersist
+    protected void prePersist() {
+        throw new UnsupportedOperationException("Place is read-only");
+    }
+
+    /**
+     * Pre-persist callback which prevents updates.
+     */
+    @PreUpdate
+    protected void preUpdate() {
+        throw new UnsupportedOperationException("Place is read-only");
+    }
+
+    /**
+     * Pre-persist callback which prevents deletes.
+     */
+    @PreRemove
+    protected void preRemove() {
+        throw new UnsupportedOperationException("Place is read-only");
+    }
     
     public String getLanguageCode() {
         return languageCode;
