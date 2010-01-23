@@ -20,6 +20,8 @@
 package de.cosmocode.palava.model.geoplanet;
 
 import java.util.Collections;
+import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -36,6 +38,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSet;
@@ -187,10 +191,34 @@ public final class Place extends AbstractToponym implements ToponymBase {
     public Set<Alias> getAliases() {
         return Collections.unmodifiableSet(aliases);
     }
+    
+    /**
+     * Retrieve the preferredAlias for a specified locale.
+     * 
+     * @param locale the target locale
+     * @return a preferred alias of this place for the given locale
+     * @throws NoSuchElementException if there is no preferred alias for
+     *         the given locale
+     */
+    public Alias getPreferredAlias(final Locale locale) {
+        final String language = locale.getLanguage();
+        return Iterables.find(getAliases(), new Predicate<Alias>() {
+            
+            @Override
+            public boolean apply(Alias input) {
+                if (input.getNameType() == NameType.Q) {
+                    return StringUtils.equals(input.getLanguageCode(), language);
+                } else {
+                    return false;
+                }
+            }
+            
+        });
+    }
 
     @Override
     public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return
+        return 
             super.renderAsMap(renderer).
             key("languageCode").value(getLanguageCode()).
             key("placeType").value(getPlaceType());

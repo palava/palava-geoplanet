@@ -58,8 +58,8 @@ public final class Alias implements AliasBase {
     @Enumerated(EnumType.STRING)
     private NameType nameType;
     
-    @JoinColumn
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn
     private Place place;
 
     /**
@@ -93,7 +93,7 @@ public final class Alias implements AliasBase {
 
     @Override
     public String getLanguageCode() {
-        return languageCode;
+        return languageCode == null ? null : languageCode.toLowerCase();
     }
     
     public NameType getNameType() {
