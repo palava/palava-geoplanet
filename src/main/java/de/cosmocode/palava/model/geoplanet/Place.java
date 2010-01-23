@@ -97,7 +97,7 @@ public final class Place extends AbstractToponym implements ToponymBase {
     }
 
     /**
-     * Pre-persist callback which prevents updates.
+     * Pre-update callback which prevents updates.
      */
     @PreUpdate
     protected void preUpdate() {
@@ -105,7 +105,7 @@ public final class Place extends AbstractToponym implements ToponymBase {
     }
 
     /**
-     * Pre-persist callback which prevents deletes.
+     * Pre-delete callback which prevents deletes.
      */
     @PreRemove
     protected void preRemove() {
