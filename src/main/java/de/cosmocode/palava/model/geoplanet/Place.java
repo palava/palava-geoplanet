@@ -63,7 +63,7 @@ import de.cosmocode.palava.model.geo.ToponymBase;
 @Entity
 @Table(name = "geoplanet_places")
 @ReadOnly
-public final class Place extends AbstractToponym implements ToponymBase {
+public final class Place extends AbstractToponym {
 
     @Column(name = "language_code")
     private String languageCode;
