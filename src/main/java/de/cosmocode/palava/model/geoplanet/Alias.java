@@ -28,9 +28,11 @@ import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import de.cosmocode.json.JSONRenderer;
 import de.cosmocode.palava.model.base.ReadOnly;
 import de.cosmocode.palava.model.geo.AliasBase;
+import de.cosmocode.rendering.Renderer;
+import de.cosmocode.rendering.RenderingException;
+import de.cosmocode.rendering.RenderingLevel;
 
 /**
  * Concrete entity implementation of the {@link AliasBase} interface.
@@ -103,8 +105,8 @@ public final class Alias implements AliasBase {
     }
     
     @Override
-    public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return renderer.
+    public void render(Renderer renderer, RenderingLevel level) throws RenderingException {
+        renderer.
             key("name").value(getName()).
             key("languageCode").value(getLanguageCode()).
             key("nameType").value(getNameType());

@@ -43,10 +43,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
-import de.cosmocode.json.JSONRenderer;
 import de.cosmocode.palava.model.base.ReadOnly;
 import de.cosmocode.palava.model.geo.AbstractToponym;
 import de.cosmocode.palava.model.geo.ToponymBase;
+import de.cosmocode.rendering.Renderer;
+import de.cosmocode.rendering.RenderingException;
+import de.cosmocode.rendering.RenderingLevel;
 
 /**
  * Concrete entity implementation of the {@link ToponymBase} interface.
@@ -214,9 +216,9 @@ public final class Place extends AbstractToponym {
     }
 
     @Override
-    public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return 
-            super.renderAsMap(renderer).
+    public void render(Renderer renderer, RenderingLevel level) throws RenderingException {
+        super.render(renderer, level);
+        renderer.
             key("languageCode").value(getLanguageCode()).
             key("placeType").value(getPlaceType());
     }
